@@ -1,22 +1,35 @@
+import {useEffect, useState} from "react";
 import Card from "../Card/Card";
+import API from "../../api/api";
 
 function ItemList() {
+    const [items, setItems] = useState([]); 
+
+    async function getItems(){
+        const itensDoBanco = await API.item.list()
+        const itensJSON = await itensDoBanco.json()
+
+        setItems(itensJSON);
+    }
+
+    useEffect(function(){
+        getItems();
+    },[])
+
     return (
         <div className="content container mb-3 mt-3">
             <div className="row">
-            <div className="col-4">
-                <Card />
+                {items.map((el) => (
+                <div className="col-4" key={el._id}>
+                    <Card
+                       id={el._id} 
+                       name={el.name}
+                       url={el.imageUrl}
+                       category={el.category.name} 
+                       refreshItems={getItems} />
             </div>
-            <div className="col-4">
-                <Card />
-            </div>    
-            <div className="col-4">
-                <Card />
-            </div>
-            <div className="col-4">
-            <Card />
-            </div>
-          </div>
+            ))}
+      </div>
       </div>
     );
 }

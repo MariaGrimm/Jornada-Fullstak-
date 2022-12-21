@@ -13,7 +13,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<ItemList />}></Route>
-        <Route path="/Cadastro" element={<Cadastro />}></Route>
+        <Route path="/cadastro" element={<Cadastro />}></Route>
       </Routes>
 
       <Footer />
